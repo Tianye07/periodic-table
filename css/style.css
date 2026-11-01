@@ -1,0 +1,175 @@
+:root {
+  --red: #EF3022;
+  --orange: #FDCA35;
+  --green: #3A9F48;
+  --ui: rgba(127, 255, 255, 0.75);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  background: #000;
+  color: #fff;
+  font-family: Helvetica, Arial, sans-serif;
+  overflow: hidden;
+}
+
+[hidden] { display: none !important; }
+
+/* ---------- Login (Image A) ---------- */
+.login {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: #fff;
+  color: #333;
+}
+
+.card {
+  width: min(440px, 100%);
+  padding: 56px 32px;
+  text-align: center;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.card h1 { margin: 0 0 14px; font-size: 22px; font-weight: 400; }
+.card p { margin: 0 0 28px; font-size: 12px; color: #555; }
+
+.google-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 18px 0 6px;
+  height: 42px;
+  border: 0;
+  border-radius: 4px;
+  background: #4285F4;
+  color: #fff;
+  font: 500 13px Helvetica, Arial, sans-serif;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+.google-btn:hover:not(:disabled) { background: #3b78db; }
+.google-btn:disabled { opacity: 0.6; cursor: default; }
+.g-badge {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  background: #fff;
+  border-radius: 3px;
+}
+
+.card .message { min-height: 1.4em; margin: 20px 0 0; font-size: 13px; }
+.card .message.error { color: #b3261e; }
+
+/* ---------- Viewer ---------- */
+#app, #container { position: absolute; inset: 0; }
+
+#menu {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 4px;
+}
+
+#menu button, #account button {
+  color: var(--ui);
+  background: transparent;
+  border: 1px solid var(--ui);
+  padding: 8px 14px;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+#menu button:hover, #account button:hover { background: rgba(0, 255, 255, 0.5); color: #fff; }
+#menu button.active { background: rgba(0, 255, 255, 0.35); color: #fff; }
+
+#legend {
+  position: absolute;
+  bottom: 24px;
+  right: 20px;
+  display: flex;
+  gap: 14px;
+  font-size: 11px;
+  color: #ccc;
+}
+.legend-item { display: inline-flex; align-items: center; gap: 6px; }
+.legend-item i { width: 12px; height: 12px; border-radius: 2px; display: inline-block; }
+
+#account {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: #aaa;
+}
+#account button { padding: 5px 10px; }
+
+/* ---------- Tiles (Image B) ---------- */
+.tile {
+  --tint: var(--red);
+  position: relative;
+  width: 120px;
+  height: 160px;
+  padding: 8px 8px 6px;
+  text-align: center;
+  cursor: default;
+  user-select: none;
+  background: color-mix(in srgb, var(--tint) 18%, rgba(0, 0, 0, 0.85));
+  border: 1.5px solid var(--tint);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--tint) 55%, transparent);
+}
+.tile.tier-red { --tint: var(--red); }
+.tile.tier-orange { --tint: var(--orange); }
+.tile.tier-green { --tint: var(--green); }
+
+.tile:hover {
+  box-shadow: 0 0 22px color-mix(in srgb, var(--tint) 90%, transparent);
+}
+
+.tile-country, .tile-age {
+  position: absolute;
+  top: 6px;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.85);
+}
+.tile-country { left: 8px; }
+.tile-age { right: 8px; }
+
+.tile-photo {
+  width: 88px;
+  height: 88px;
+  margin: 16px auto 8px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 26px;
+  color: #fff;
+  overflow: hidden;
+}
+.tile-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.tile-name {
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1.15;
+  color: #fff;
+  max-height: 2.3em;
+  overflow: hidden;
+}
+.tile-interest {
+  margin-top: 4px;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.75);
+}
