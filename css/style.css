@@ -116,6 +116,25 @@ html, body {
 }
 #account button { padding: 5px 10px; }
 
+/* The centred menu and right-aligned legend collide below this width, so stack them. */
+@media (max-width: 960px) {
+  #menu { bottom: 44px; }
+  #legend {
+    left: 8px;
+    right: 8px;
+    bottom: 16px;
+    justify-content: center;
+    gap: 10px;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 360px) {
+  #legend { gap: 8px; font-size: 10px; }
+  .legend-item { gap: 4px; }
+  .legend-item i { width: 10px; height: 10px; }
+}
+
 /* ---------- Tiles (Image B) ---------- */
 .tile {
   --tint: var(--red);
