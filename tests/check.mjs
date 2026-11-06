@@ -1,7 +1,7 @@
 // Run with: node tests/check.mjs
 import { readFileSync } from 'node:fs';
 import assert from 'node:assert/strict';
-import { table, sphere, helix, grid } from '../js/layouts.js';
+import { table, sphere, helix, grid, pyramid } from '../js/layouts.js';
 import { parseNetWorth, tierFor, rowsToPeople, safeUrl } from '../js/sheet.js';
 
 // minimal CSV parser (handles quoted fields)
@@ -101,8 +101,38 @@ test('helix is a double helix: two strands half a turn apart, 100 tiles each', (
   assert.equal(distinct(h, key), 200);
   assert.ok(angle(h[0]) !== angle(h[1]));
 });
+test('pyramid is a tetrahedron: 4 faces of 50 tiles, each tile flat on its face and facing out', () => {
+  const p = pyramid(200);
+  assert.equal(p.length, 200);
+  assert.equal(distinct(p, key), 200);
+  const normals = [];
+  for (let f = 0; f < 4; f++) {
+    const face = p.slice(f * 50, f * 50 + 50);
+    const n = face[0].look.map((v, i) => (v - face[0].position[i]) / 1000);
+    assert.ok(Math.abs(Math.hypot(...n) - 1) < 1e-9);
+    normals.push(n);
+    const d0 = n.reduce((s, v, i) => s + v * face[0].position[i], 0);
+    for (const t of face) {
+      // same plane, same outward normal, up lies in the plane
+      assert.ok(Math.abs(n.reduce((s, v, i) => s + v * t.position[i], 0) - d0) < 1e-6);
+      assert.ok(Math.abs(n.reduce((s, v, i) => s + v * t.up[i], 0)) < 1e-9);
+    }
+  }
+  // corners filled: each face's widest pair of tiles spans the full lattice edge (9 rows x 210)
+  for (let f = 0; f < 4; f++) {
+    const face = p.slice(f * 50, f * 50 + 50).map((t) => t.position);
+    let widest = 0;
+    for (const a of face) for (const b of face) widest = Math.max(widest, Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]));
+    assert.ok(Math.abs(widest - 9 * 210) < 1e-6, `face ${f} spans ${widest.toFixed(1)}`);
+  }
+  for (const n of [1, 3, 7, 50, 199, 201]) assert.equal(pyramid(n).length, n);
+  // regular tetrahedron: every pair of face normals meets at cos = -1/3
+  for (let i = 0; i < 4; i++)
+    for (let j = i + 1; j < 4; j++)
+      assert.ok(Math.abs(normals[i].reduce((s, v, k) => s + v * normals[j][k], 0) + 1 / 3) < 1e-9);
+});
 test('no two tiles closer than a tile size in any 3D layout', () => {
-  for (const [name, layout] of Object.entries({ sphere: sphere(200), helix: helix(200), grid: grid(200) })) {
+  for (const [name, layout] of Object.entries({ sphere: sphere(200), helix: helix(200), grid: grid(200), pyramid: pyramid(200) })) {
     let min = Infinity;
     for (let i = 0; i < layout.length; i++)
       for (let j = i + 1; j < layout.length; j++) {

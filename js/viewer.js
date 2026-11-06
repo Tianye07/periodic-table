@@ -57,9 +57,10 @@ function buildTile(person) {
   return tile;
 }
 
-function toObject3D({ position, look }) {
+function toObject3D({ position, look, up }) {
   const o = new THREE.Object3D();
   o.position.set(...position);
+  if (up) o.up.set(...up);
   if (look) o.lookAt(new THREE.Vector3(...look));
   return o;
 }

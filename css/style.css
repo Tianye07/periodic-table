@@ -129,6 +129,11 @@ html, body {
   }
 }
 
+/* Five menu buttons need tighter padding on phones. */
+@media (max-width: 480px) {
+  #menu button { padding: 8px 9px; font-size: 11px; }
+}
+
 @media (max-width: 360px) {
   #legend { gap: 8px; font-size: 10px; }
   .legend-item { gap: 4px; }

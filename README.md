@@ -1,6 +1,6 @@
 # People Table (3D)
 
-A Three.js CSS3D "periodic table" adapted to show people from a Google Sheet. It has Google sign-in, tiles coloured by net worth, and four layouts (Table 20x10, Sphere, double Helix, Grid 5x4x10).
+A Three.js CSS3D "periodic table" adapted to show people from a Google Sheet. It has Google sign-in, tiles coloured by net worth, and five layouts (Table 20x10, Sphere, double Helix, Grid 5x4x10, Pyramid (tetrahedron)).
 
 Static site: no build step and no backend.
 
@@ -49,7 +49,7 @@ Any static host works. For GitHub Pages: push this folder to a repo, then **Sett
 | Data from Google Sheet | `js/sheet.js` (Sheets API v4, using the signed-in user's token) |
 | Tile content (Image B): country, age, photo, name, interest | `js/viewer.js`, `css/style.css` |
 | Net worth colours: red < $100K, orange $100K to $200K, green > $200K | `tierFor()` in `js/sheet.js` |
-| Table 20x10, Sphere, double Helix, Grid 5x4x10 | `js/layouts.js` |
+| Table 20x10, Sphere, double Helix, Grid 5x4x10, Pyramid (tetrahedron) | `js/layouts.js` |
 
 Notes
 - Exactly $100,000 and exactly $200,000 count as orange (the brief doesn't say which way the boundaries go).
